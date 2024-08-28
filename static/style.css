@@ -1,0 +1,188 @@
+/* General styling for all pages */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0f1a29; /* Fourth color */
+    color: #ececec; /* First color */
+}
+
+h1 {
+    text-align: center;
+    color: #1b2e49; /* Second color */
+    margin: 20px 0;
+}
+
+h2 {
+    color: #385170; /* Third color */
+    margin-bottom: 10px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* Third color */
+    border: 1px solid rgba(5, 104, 81, 0.67); /* Second color */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-item {
+    width: 48%;
+}
+
+form {
+    padding: 20px;
+    background-color: #385170; /* Third color */
+    border: 1px solid #9fd3c7; /* Second color */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form input[type="text"], form input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #9fd3c7; /* Second color */
+    border-radius: 5px;
+    background-color: #142d4c; /* Fourth color */
+    color: #ececec; /* First color */
+}
+
+form button {
+    width: calc(100% - 30px);
+    padding: 10px;
+    background-color: #9fd3c7; /* Second color */
+    border: none;
+    border-radius: 5px;
+    color: #142d4c; /* Fourth color */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #77b9a5; /* Slightly darker second color */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 2px solid #9fd3c7; /* Second color */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #142d4c; /* Fourth color */
+    color: #ffffff; /* First color */
+}
+td{color: #0f1a29;}
+td a {
+    color: #0f1a29; /* Second color */
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin: 20px 0;
+    color: #0f1a29; /* Second color */
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-logo img {
+    width: 60px;
+    height: auto;
+    margin-right: 10px; /* Space between image and text */
+    border-radius: 5px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 20px;
+    padding: 8px 16px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+}
+
+.navbar-right a:hover {
+    background-color: #d4d4d4;
+}
+
+
+
+header {
+        display: flex;
+        align-items: center; /* Center the content vertically */
+        padding: 10px;       /* Add some padding around the header */
+        background-color: #ffffff; /* Optional: Change background color */
+        color: white;        /* Set text color to white */
+    }
+
+    /* Styling for the image */
+    header img {
+        width: 100px;         /* Adjust the image width as needed */
+        height: auto;         /* Maintain aspect ratio */
+        margin-right: 20px;   /* Space between image and text */
+    }
+
+    /* Styling for the header text */
+    header h1 {
+        text-align: left;
+        margin: 0;            /* Remove default margins */
+        font-size: 30px;      /* Adjust font size */
+    }
+
+    header h2 {
+        text-align: left;
+        margin: 0;            /* Remove default margins */
+        font-size: 16px;      /* Adjust font size */
+        color: #233d61;          /* Optional: Lighter color for the subtitle */
+    }

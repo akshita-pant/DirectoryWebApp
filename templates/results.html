@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results for "{{ keywords }}"</h1>
+        {% if found_files %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Link to File</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in found_files %}
+                        <tr>
+                            <td>{{ file }}</td>
+                            <td><a href="{{ url_for('download_file', file_name=file) }}" target="_blank">Open</a></td>
+                            <td><a href="{{ url_for('download_file', file_name=file) }}" download>Download</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No files contain the keywords "{{ keywords }}"</p>
+        {% endif %}
+        <a class="back-link" href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+</body>
+</html>
