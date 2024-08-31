@@ -48,38 +48,48 @@ def home():
         return redirect(url_for('login'))
     return render_template('index.html')
 
-
 @app.route('/upload', methods=['POST'])
 def upload():
+    # Check if the request contains files
     if 'file' not in request.files:
         flash('No file part', 'danger')
+        print('No file part in request')
         return redirect(request.url)
 
     file = request.files['file']
+
+    # Check if a file was selected
     if file.filename == '':
         flash('No selected file', 'danger')
+        print('No selected file')
         return redirect(request.url)
 
+    # Validate file type
     if file and file.filename.endswith('.pdf'):
         filename = secure_filename(file.filename)
         file_content = file.read()
 
+        # Debug: Print file information
+        print(f"File Name: {filename}")
+        print(f"File Size: {len(file_content)} bytes")
+
         try:
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO pdf_files (file_name, file_content) VALUES (%s, %s)", (filename, file_content))
+            cur.execute("INSERT INTO pdf_files (file_name, file_data) VALUES (%s, %s)", (filename, file_content))
             mysql.connection.commit()
             cur.close()
             flash('File uploaded successfully!', 'success')
+            print('File uploaded successfully!')
         except Exception as e:
             flash(f'Failed to upload file: {e}', 'danger')
+            print(f'Failed to upload file: {e}')
             return redirect(url_for('home'))
 
         return redirect(url_for('home'))
     else:
         flash('Invalid file type. Only PDFs are allowed.', 'danger')
+        print('Invalid file type')
         return redirect(request.url)
-
-
 
 @app.route('/search_by_name', methods=['GET'])
 def search_by_name():
@@ -105,7 +115,7 @@ def search_by_keywords():
     found_files = []
 
     cur = mysql.connection.cursor()
-    cur.execute("SELECT file_name, file_content FROM pdf_files")
+    cur.execute("SELECT file_name, file_data FROM pdf_files")
     files = cur.fetchall()
     cur.close()
 
@@ -134,18 +144,41 @@ def search_pdf_for_keywords(file_content, keywords):
     return False
 
 
+from flask import Flask, request, send_file
+import io
+
+@app.route('/open_file/<filename>')
+def open_file(filename):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT file_data FROM pdf_files WHERE file_name = %s", (filename,))
+    file_content = cur.fetchone()[0]
+    cur.close()
+
+    # Use BytesIO to create an in-memory binary stream
+    return send_file(
+        io.BytesIO(file_content),
+        mimetype='application/pdf',
+        as_attachment=False,  # Ensures the file is opened in the browser instead of downloading
+        download_name=filename  # Specifies the name for the file when opened
+    )
+
+
+# Download file route
 @app.route('/download/<filename>')
 def download_file(filename):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT file_content FROM pdf_files WHERE file_name = %s", (filename,))
+    cur.execute("SELECT file_data FROM pdf_files WHERE file_name = %s", (filename,))
     file = cur.fetchone()
     cur.close()
 
     if file:
-        return send_file(io.BytesIO(file[0]), attachment_filename=filename, as_attachment=True)
+        # Sending file for downloading
+        return send_file(io.BytesIO(file[0]), mimetype='application/pdf', as_attachment=True, download_name=filename)
     else:
         flash('File not found!', 'danger')
         return redirect(url_for('home'))
+
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -178,7 +211,7 @@ def login():
         if user and bcrypt.check_password_hash(user[3], form.password.data):  # Access password_hash by index
             session['user_id'] = user[0]  # User ID is assumed to be the first element
             session['username'] = user[1]  # Username is assumed to be the second element
-            flash('You have been logged in!', 'success')
+            #flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
         else:
             flash('Login unsuccessful. Please check your email and password', 'danger')
@@ -192,7 +225,7 @@ def test():
 def logout():
     session.pop('user_id', None)
     session.pop('username', None)
-    flash('You have been logged out!', 'info')
+    #flash('You have been logged out!', 'info')
     return redirect(url_for('login'))
 
 

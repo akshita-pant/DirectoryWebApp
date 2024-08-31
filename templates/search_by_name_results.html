@@ -21,8 +21,9 @@
                 <tbody>
                     <tr>
                         <td>{{ file_name }}</td>
-                        <td><a href="{{ url_for('download_file', file_name=file_path) }}" target="_blank">Open</a></td>
-                        <td><a href="{{ url_for('download_file', file_name=file_path) }}" download>Download</a></td>
+                        <!-- Update these lines -->
+                        <td><a href="{{ url_for('open_file', filename=file_name) }}" target="_blank" class="btn btn-primary">Open</a>
+                        <td><a href="{{ url_for('download_file', filename=file_path) }}" download>Download</a></td>
                     </tr>
                 </tbody>
             </table>
