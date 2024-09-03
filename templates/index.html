@@ -56,5 +56,16 @@
     {% endif %}
 {% endwith %}
 
+
+    <script>
+    window.onbeforeunload = function() {
+        // Create an AJAX request to the logout route
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "{{ url_for('logout') }}", false);  // Synchronous request
+        xhr.send();
+    };
+    </script>
+
+
 </body>
 </html>

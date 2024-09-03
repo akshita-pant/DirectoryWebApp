@@ -9,6 +9,7 @@ import fitz  # PyMuPDF
 import pytesseract
 from PIL import Image
 from werkzeug.utils import secure_filename
+from datetime import timedelta
 
 app = Flask(__name__)
 
@@ -16,11 +17,13 @@ app = Flask(__name__)
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # MySQL and Flask configuration
-app.config['SECRET_KEY'] = 'bc8ba792963f7a8dabfa441d1f158701'  # Replace with your actual secret key
+app.config['SECRET_KEY'] = 'bc8ba792963f7a8dabfa441d1f158701'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'Akshita@2003'
 app.config['MYSQL_DB'] = 'login_credentials_drdoapp'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # 5 minutes of inactivity will log out the user
+
 
 mysql = MySQL(app)
 bcrypt = Bcrypt(app)
@@ -198,6 +201,8 @@ def register():
     return render_template('register.html', form=form)
 
 
+from flask import session
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'user_id' in session:
@@ -211,15 +216,13 @@ def login():
         if user and bcrypt.check_password_hash(user[3], form.password.data):  # Access password_hash by index
             session['user_id'] = user[0]  # User ID is assumed to be the first element
             session['username'] = user[1]  # Username is assumed to be the second element
-            #flash('You have been logged in!', 'success')
+            session.permanent = True  # Makes the session permanent so it uses the configured timeout
             return redirect(url_for('home'))
         else:
             flash('Login unsuccessful. Please check your email and password', 'danger')
     return render_template('login.html', form=form)
 
-@app.route('/test')
-def test():
-    return "Flask is working!"
+
 
 @app.route('/logout')
 def logout():
