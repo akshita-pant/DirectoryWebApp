@@ -15,10 +15,10 @@
 </header>
 
 <body><br>
-    <h2 style="color:white;text-align:center;">LOGIN</h2><br>
+    <h1 style="color:white;text-align:center;">LOGIN</h1>
     <form method="POST" action="{{ url_for('login') }}">
         {{ form.hidden_tag() }}
-        <div>
+        <div class="fo">
             {{ form.email.label }}
             {{ form.email() }}
             {% for error in form.email.errors %}
@@ -26,7 +26,7 @@
             {% endfor %}
         </div>
         <br>
-        <div>
+        <div class="fo">
             {{ form.password.label }}
             {{ form.password() }}
             {% for error in form.password.errors %}
@@ -34,7 +34,7 @@
             {% endfor %}
         </div>
         <br>
-        <div>
+        <div class="fo">
             {{ form.submit() }}
         </div>
     </form>
