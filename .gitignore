@@ -1,0 +1,19 @@
+# Ignore Python virtual environment
+.venv/
+
+# Ignore PyCharm project settings
+.idea/
+
+# Ignore Python cache files
+__pycache__/
+
+# Ignore build and distribution folders
+/dist
+/build
+
+# Ignore compiled files
+*.exe
+*.pkg
+
+# Ignore pyinstaller builds
+*.spec
